@@ -1,0 +1,444 @@
+{
+  "info": {
+    "name": "Category & Product API",
+    "description": "Full API collection for testing Category and Product modules",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/",
+            "header": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "Get Categories (List)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/category?page=1&per_page=20&sort_by=name&sort_order=asc",
+              "host": ["{{base_url}}"],
+              "path": ["category"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "per_page", "value": "20"},
+                {"key": "search", "value": "", "disabled": true},
+                {"key": "search_id", "value": "", "disabled": true},
+                {"key": "status", "value": "", "disabled": true},
+                {"key": "sort_by", "value": "name"},
+                {"key": "sort_order", "value": "asc"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Category by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/category/1"
+          }
+        },
+        {
+          "name": "Create Category (Root)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/category",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Для мотоцикліста\",\n  \"description\": \"Головна категорія для мотоциклістів\",\n  \"parent_category_id\": 0,\n  \"seo_keyword\": \"dlya-motocyklista\",\n  \"meta_title\": \"Для мотоцикліста\",\n  \"meta_description\": \"Товари для мотоциклістів\",\n  \"meta_keyword\": \"мото, мотоцикліст\",\n  \"status\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Category (Child)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/category",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Аксесуари\",\n  \"description\": \"Аксесуари для мотоциклістів\",\n  \"parent_category_id\": 1,\n  \"seo_keyword\": \"aksesuari\",\n  \"status\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Category (Grandchild)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/category",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Рюкзаки\",\n  \"description\": \"Рюкзаки для мотоциклістів\",\n  \"parent_category_id\": 2,\n  \"seo_keyword\": \"ryukzaki\",\n  \"status\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/category/1",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Для мотоцикліста (оновлено)\",\n  \"status\": 0\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Category (Recursive)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/category/1"
+          }
+        },
+        {
+          "name": "Search Categories by Name",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/category?search=Рюкзаки",
+              "host": ["{{base_url}}"],
+              "path": ["category"],
+              "query": [
+                {"key": "search", "value": "Рюкзаки"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter Categories by Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/category?status=1",
+              "host": ["{{base_url}}"],
+              "path": ["category"],
+              "query": [
+                {"key": "status", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Sort Categories (Я-А)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/category?sort_by=name&sort_order=desc",
+              "host": ["{{base_url}}"],
+              "path": ["category"],
+              "query": [
+                {"key": "sort_by", "value": "name"},
+                {"key": "sort_order", "value": "desc"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "item": [
+        {
+          "name": "Get Products (List)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/product?page=1&per_page=20&sort_by=name&sort_order=asc",
+              "host": ["{{base_url}}"],
+              "path": ["product"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "per_page", "value": "20"},
+                {"key": "category_id", "value": "", "disabled": true},
+                {"key": "price_from", "value": "", "disabled": true},
+                {"key": "price_to", "value": "", "disabled": true},
+                {"key": "sort_by", "value": "name"},
+                {"key": "sort_order", "value": "asc"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/product/1"
+          }
+        },
+        {
+          "name": "Create Product (with categories, attributes, images)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/product",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Мотоциклетний рюкзак XL\",\n  \"description\": \"Великий рюкзак для мотоциклістів\",\n  \"seo_keyword\": \"moto-ryukzak-xl\",\n  \"meta_title\": \"Мотоциклетний рюкзак XL\",\n  \"price\": 1500.00,\n  \"model\": \"RZK-XL-001\",\n  \"status\": 1,\n  \"categories\": [1, 2],\n  \"attributes\": [\n    {\"group_name\": \"Розміри\", \"name\": \"Обʼєм\", \"value\": \"35л\", \"sort_order\": 0},\n    {\"group_name\": \"Матеріал\", \"name\": \"Основна тканина\", \"value\": \"Cordura 1000D\", \"sort_order\": 1}\n  ],\n  \"images\": [\n    {\"image\": \"/uploads/product/rzk-xl-001-1.jpg\", \"sort_order\": 0},\n    {\"image\": \"/uploads/product/rzk-xl-001-2.jpg\", \"sort_order\": 1}\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Product (Minimal)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/product",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Простий товар\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/product/1",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Мотоциклетний рюкзак XL (оновлено)\",\n  \"price\": 1750.00,\n  \"status\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/product/1"
+          }
+        },
+        {
+          "name": "Filter Products by Price",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/product?price_from=100&price_to=2000",
+              "host": ["{{base_url}}"],
+              "path": ["product"],
+              "query": [
+                {"key": "price_from", "value": "100"},
+                {"key": "price_to", "value": "2000"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter Products by Category",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/product?category_id=1",
+              "host": ["{{base_url}}"],
+              "path": ["product"],
+              "query": [
+                {"key": "category_id", "value": "1"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Images",
+      "item": [
+        {
+          "name": "Get Product Images",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/product/1/image"
+          }
+        },
+        {
+          "name": "Get Product Image by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/product/1/image/1"
+          }
+        },
+        {
+          "name": "Add Product Image",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/product/1/image",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"image\": \"/uploads/product/new-image.jpg\",\n  \"sort_order\": 3\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Product Image (sort_order)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/product/1/image/1",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sort_order\": 5\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Product Image",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/product/1/image/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Categories",
+      "item": [
+        {
+          "name": "Get Product Categories",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/product/1/category"
+          }
+        },
+        {
+          "name": "Get Product Category by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/product/1/category/1"
+          }
+        },
+        {
+          "name": "Add Category to Product",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/product/1/category",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": 3\n}"
+            }
+          }
+        },
+        {
+          "name": "Remove Category from Product",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/product/1/category/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Attributes",
+      "item": [
+        {
+          "name": "Get Product Attributes",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/product/1/attribute"
+          }
+        },
+        {
+          "name": "Get Product Attribute by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/product/1/attribute/1"
+          }
+        },
+        {
+          "name": "Add Product Attribute",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/product/1/attribute",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"group_name\": \"Характеристики\",\n  \"name\": \"Вага\",\n  \"value\": \"1.2 кг\",\n  \"sort_order\": 0\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Product Attribute",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/product/1/attribute/1",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"1.5 кг\",\n  \"sort_order\": 2\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Product Attribute",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/product/1/attribute/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Stores",
+      "item": [
+        {
+          "name": "Get Product Stores",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/product/1/store"
+          }
+        },
+        {
+          "name": "Get Product Store by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/product/1/store/1"
+          }
+        }
+      ]
+    }
+  ]
+}
